@@ -25,7 +25,6 @@ libs/*.jar
 Thumbs.db
 desktop.ini
 
-# Secrets / local environment
-.env
-.env.*
-!.env.example
+# Other
+.py
+
