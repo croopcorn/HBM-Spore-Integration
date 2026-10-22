@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "hbmspore:block/dead_biomass_block"
+    }
+  }
+}

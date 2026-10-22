@@ -33,7 +33,7 @@ public class hbmsporeClient {
     @SubscribeEvent
     public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
         event.register(
-                (state, level, pos, tintIndex) -> 0x808080,
+                (state, level, pos, tintIndex) -> 0x909090,
                 hbmspore.DEAD_BIOMASS.get()
         );
     }

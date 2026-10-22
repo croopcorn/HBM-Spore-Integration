@@ -53,20 +53,10 @@ public class hbmspore {
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
     public static final DeferredBlock<Block> DEAD_BIOMASS =
-            BLOCKS.register("dead_biomass_block",
-                    () -> new physicReplaceLogic(
-                            ResourceLocation.parse("minecraft:air"),
-                            BlockBehaviour.Properties.of()
-                                    .mapColor(MapColor.STONE)
-                                    .strength(1.5F, 6.0F)
-                                    .randomTicks()
-                    ));
+            BLOCKS.registerSimpleBlock("dead_biomass_block",BlockBehaviour.Properties.of().destroyTime(0.5F));
 
     public static final DeferredItem<BlockItem> DEAD_BIOMASS_ITEM =
-            ITEMS.registerSimpleBlockItem(
-                    "dead_biomass_block",
-                    DEAD_BIOMASS
-            );
+            ITEMS.registerSimpleBlockItem("dead_biomass_block", DEAD_BIOMASS);
 
 
     // Creates a creative tab with the id "examplemod:example_tab" for the example item, that is placed after the combat tab
