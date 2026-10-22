@@ -1,3 +1,12 @@
+[![Minecraft](https://img.shields.io/badge/Minecraft-1.21.1-62B47A?style=flat-square)](https://www.minecraft.net)
+[![NeoForge](https://img.shields.io/badge/NeoForge-21.1.x-DF7A2A?style=flat-square)](https://neoforged.net)
+[![License](https://img.shields.io/badge/License-All_rights_reserved-2F80ED)](LICENSE.LESSER)
+![Status](https://img.shields.io/badge/Status-alpha-F5A623?style=flat-square)
+
+[![CurseForge](https://img.shields.io/badge/CurseForge-Soon-F16436?style=for-the-badge&logo=curseforge&logoColor=white)](https://www.curseforge.com/minecraft/mc-mods)
+[![Modrinth](https://img.shields.io/badge/Modrinth-under_review-1BD96A?style=for-the-badge&logo=modrinth&logoColor=white)](https://modrinth.com/mod/hbm-spore-integration)
+
+
 ## License
 
 All rights reserved.
