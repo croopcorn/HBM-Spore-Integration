@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.hbm.handler.radiation.RadiationSystemNT;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
@@ -23,12 +22,12 @@ public class hazardReplace {
 
     private static final Map<BlockKey, Integer> EXPOSURE = new HashMap<>();
 
-    private static final ResourceLocation ROOTED_BIOMASS =
-            ResourceLocation.parse("spore:rooted_biomass");
-    private static final ResourceLocation BIOMASS_BLOCK =
-            ResourceLocation.parse("spore:biomass_block");
     private static final ResourceLocation INFESTED_DIRT =
             ResourceLocation.parse("spore:infested_dirt");
+    private static final ResourceLocation INFESTED_STONE =
+            ResourceLocation.parse("spore:infested_stone");
+    private static final ResourceLocation INFESTED_SAND =
+            ResourceLocation.parse("spore:infested_sand");
 
     private static final double RAD_LIMIT = 1.0D;
     private static final int EXPOSURE_LIMIT = 10;
@@ -68,14 +67,16 @@ public class hazardReplace {
 
                     if (exposure >= EXPOSURE_LIMIT) {
 
-                        if (id.equals(ROOTED_BIOMASS)) {
+                        if (id.equals(INFESTED_DIRT)) {
+                            level.setBlock(pos, hbmspore.DEAD_INFESTED_DIRT.get()
+                                    .defaultBlockState(), 3);
+                        }
+                        else if (id.equals(INFESTED_STONE)) {
                             level.setBlock(pos, hbmspore.DEAD_INFESTED_STONE.get()
                                     .defaultBlockState(), 3);
-//                        } else if (id.equals(BIOMASS_BLOCK)) {
-//                            level.setBlock(pos, hbmspore.DEAD_BIOMASS_BLOCK.get()
-//                                    .defaultBlockState(), 3);
-                        } else if (id.equals(INFESTED_DIRT)) {
-                            level.setBlock(pos, hbmspore.DEAD_INFESTED_DIRT.get()
+                        }
+                        else if (id.equals(INFESTED_SAND)) {
+                            level.setBlock(pos, hbmspore.DEAD_INFESTED_SAND.get()
                                     .defaultBlockState(), 3);
                         }
 
@@ -89,10 +90,11 @@ public class hazardReplace {
     }
 
     private static boolean isSporeBlock(ResourceLocation id) {
-        return id.equals(ROOTED_BIOMASS)
-                || id.equals(BIOMASS_BLOCK)
-                || id.equals(INFESTED_DIRT);
+        return id.equals(INFESTED_DIRT)
+                || id.equals(INFESTED_STONE)
+                || id.equals(INFESTED_SAND);
     }
 
-    private record BlockKey(ResourceKey<Level> dimension, long pos) {}
+    private record BlockKey(ResourceKey<Level> dimension, long pos) {
+    }
 }
