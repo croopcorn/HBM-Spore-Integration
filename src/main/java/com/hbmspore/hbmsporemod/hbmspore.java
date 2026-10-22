@@ -52,53 +52,22 @@ public class hbmspore {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
-    public static final DeferredBlock<Block> DEAD_INFESTED_STONE =
-            BLOCKS.register("dead_infested_stone",
+    public static final DeferredBlock<Block> DEAD_BIOMASS =
+            BLOCKS.register("dead_biomass_block",
                     () -> new physicReplaceLogic(
-                            ResourceLocation.parse("hbm:stone_cracked"),
+                            ResourceLocation.parse("minecraft:air"),
                             BlockBehaviour.Properties.of()
                                     .mapColor(MapColor.STONE)
                                     .strength(1.5F, 6.0F)
                                     .randomTicks()
                     ));
 
-    public static final DeferredBlock<Block> DEAD_INFESTED_SAND =
-            BLOCKS.register("dead_infested_sand",
-                    () -> new physicReplaceLogic(
-                            ResourceLocation.parse("minecraft:sand"),
-                            BlockBehaviour.Properties.of()
-                                    .mapColor(MapColor.SAND)
-                                    .strength(0.5F)
-                                    .randomTicks()
-                    ));
-
-    public static final DeferredBlock<Block> DEAD_INFESTED_DIRT =
-            BLOCKS.register("dead_infested_dirt",
-                    () -> new physicReplaceLogic(
-                            ResourceLocation.parse("minecraft:dirt"),
-                            BlockBehaviour.Properties.of()
-                                    .mapColor(MapColor.DIRT)
-                                    .strength(0.5F)
-                                    .randomTicks()
-                    ));
-
-    public static final DeferredItem<BlockItem> DEAD_INFESTED_STONE_ITEM =
+    public static final DeferredItem<BlockItem> DEAD_BIOMASS_ITEM =
             ITEMS.registerSimpleBlockItem(
-                    "dead_infested_stone",
-                    DEAD_INFESTED_STONE
+                    "dead_biomass_block",
+                    DEAD_BIOMASS
             );
 
-    public static final DeferredItem<BlockItem> DEAD_INFESTED_SAND_ITEM =
-            ITEMS.registerSimpleBlockItem(
-                    "dead_infested_sand",
-                    DEAD_INFESTED_SAND
-            );
-
-    public static final DeferredItem<BlockItem> DEAD_INFESTED_DIRT_ITEM =
-            ITEMS.registerSimpleBlockItem(
-                    "dead_infested_dirt",
-                    DEAD_INFESTED_DIRT
-            );
 
     // Creates a creative tab with the id "examplemod:example_tab" for the example item, that is placed after the combat tab
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EXAMPLE_TAB =
@@ -106,11 +75,9 @@ public class hbmspore {
                     () -> CreativeModeTab.builder()
                             .title(Component.translatable("itemGroup.hbmspore"))
                             .withTabsBefore(CreativeModeTabs.COMBAT)
-                            .icon(() -> DEAD_INFESTED_STONE_ITEM.get().getDefaultInstance())
+                            .icon(() -> DEAD_BIOMASS_ITEM.get().getDefaultInstance())
                             .displayItems((parameters, output) -> {
-                                output.accept(DEAD_INFESTED_STONE_ITEM.get());
-                                output.accept(DEAD_INFESTED_SAND_ITEM.get());
-                                output.accept(DEAD_INFESTED_DIRT_ITEM.get());
+                                output.accept(DEAD_BIOMASS_ITEM.get());
                             })
                             .build()
             );
@@ -162,9 +129,7 @@ public class hbmspore {
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
-            event.accept(DEAD_INFESTED_STONE_ITEM);
-            event.accept(DEAD_INFESTED_SAND_ITEM);
-            event.accept(DEAD_INFESTED_DIRT_ITEM);
+            event.accept(DEAD_BIOMASS_ITEM);
         }
     }
 

@@ -9,6 +9,8 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+import net.neoforged.bus.api.IEventBus;
 
 // This class will not load on dedicated servers. Accessing client side code from here is safe.
 @Mod(value = hbmspore.MODID, dist = Dist.CLIENT)
@@ -27,5 +29,12 @@ public class hbmsporeClient {
         // Some client setup code
         hbmspore.LOGGER.info("HELLO FROM CLIENT SETUP");
         hbmspore.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
+    }
+    @SubscribeEvent
+    public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
+        event.register(
+                (state, level, pos, tintIndex) -> 0x808080,
+                hbmspore.DEAD_BIOMASS.get()
+        );
     }
 }

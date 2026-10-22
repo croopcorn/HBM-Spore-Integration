@@ -22,12 +22,8 @@ public class hazardReplace {
 
     private static final Map<BlockKey, Integer> EXPOSURE = new HashMap<>();
 
-    private static final ResourceLocation INFESTED_DIRT =
-            ResourceLocation.parse("spore:infested_dirt");
-    private static final ResourceLocation INFESTED_STONE =
-            ResourceLocation.parse("spore:infested_stone");
-    private static final ResourceLocation INFESTED_SAND =
-            ResourceLocation.parse("spore:infested_sand");
+    private static final ResourceLocation BIOMASS =
+            ResourceLocation.parse("spore:biomass_block");
 
     private static final double RAD_LIMIT = 1.0D;
     private static final int EXPOSURE_LIMIT = 10;
@@ -67,16 +63,8 @@ public class hazardReplace {
 
                     if (exposure >= EXPOSURE_LIMIT) {
 
-                        if (id.equals(INFESTED_DIRT)) {
-                            level.setBlock(pos, hbmspore.DEAD_INFESTED_DIRT.get()
-                                    .defaultBlockState(), 3);
-                        }
-                        else if (id.equals(INFESTED_STONE)) {
-                            level.setBlock(pos, hbmspore.DEAD_INFESTED_STONE.get()
-                                    .defaultBlockState(), 3);
-                        }
-                        else if (id.equals(INFESTED_SAND)) {
-                            level.setBlock(pos, hbmspore.DEAD_INFESTED_SAND.get()
+                        if (id.equals(BIOMASS)) {
+                            level.setBlock(pos, hbmspore.DEAD_BIOMASS.get()
                                     .defaultBlockState(), 3);
                         }
 
@@ -90,9 +78,7 @@ public class hazardReplace {
     }
 
     private static boolean isSporeBlock(ResourceLocation id) {
-        return id.equals(INFESTED_DIRT)
-                || id.equals(INFESTED_STONE)
-                || id.equals(INFESTED_SAND);
+        return id.equals(BIOMASS);
     }
 
     private record BlockKey(ResourceKey<Level> dimension, long pos) {
