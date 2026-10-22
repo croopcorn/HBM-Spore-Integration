@@ -1,0 +1,31 @@
+# Gradle
+.gradle/
+build/
+out/
+
+# Local run data and generated files
+run/
+runs/
+logs/
+*.log
+
+# Local mod dependencies — do not commit third-party mod JARs
+libs/*.jar
+
+# IDE settings
+.idea/
+*.iml
+.vscode/
+.project
+.classpath
+.settings/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Secrets / local environment
+.env
+.env.*
+!.env.example
