@@ -48,11 +48,25 @@ public class hbmspore {
     public static final DeferredItem<BlockItem> DEAD_BIOMASS_ITEM =
             ITEMS.registerSimpleBlockItem("dead_biomass_block", DEAD_BIOMASS);
 
-
     public static final DeferredBlock<Block> DEAD_GASTRIC_BIOMASS =
             BLOCKS.registerSimpleBlock("dead_gastric_biomass_block", BlockBehaviour.Properties.of().strength(4.0F, 4.0F).sound(SoundType.SLIME_BLOCK));
     public static final DeferredItem<BlockItem> DEAD_GASTRIC_BIOMASS_ITEM =
             ITEMS.registerSimpleBlockItem("dead_gastric_biomass_block", DEAD_GASTRIC_BIOMASS);
+
+    public static final DeferredBlock<Block> DEAD_CALCIFIED_BIOMASS = 
+            BLOCKS.registerSimpleBlock("dead_calcified_biomass_block", BlockBehaviour.Properties.of().strength(8.0F, 20.0F).sound(SoundType.SLIME_BLOCK));
+    public static final DeferredItem<BlockItem> DEAD_CALCIFIED_BIOMASS_ITEM = 
+            ITEMS.registerSimpleBlockItem("dead_calcified_biomass_block", DEAD_CALCIFIED_BIOMASS);
+
+    public static final DeferredBlock<Block> DEAD_SICKEN_BIOMASS = 
+            BLOCKS.registerSimpleBlock("dead_sicken_biomass_block", BlockBehaviour.Properties.of().strength(4.0F, 4.0F).sound(SoundType.SLIME_BLOCK));
+    public static final DeferredItem<BlockItem> DEAD_SICKEN_BIOMASS_ITEM = 
+            ITEMS.registerSimpleBlockItem("dead_sicken_biomass_block", DEAD_SICKEN_BIOMASS);
+
+    public static final DeferredBlock<Block> DEAD_FREEZE_BURNED_BIOMASS = 
+            BLOCKS.registerSimpleBlock("dead_freeze_burned_biomass_block", BlockBehaviour.Properties.of().strength(2.0F, 2.0F).sound(SoundType.SLIME_BLOCK).randomTicks());
+    public static final DeferredItem<BlockItem> DEAD_FREEZE_BURNED_BIOMASS_ITEM = 
+            ITEMS.registerSimpleBlockItem("dead_freeze_burned_biomass_block", DEAD_FREEZE_BURNED_BIOMASS);
 
 
     // Creates a creative tab with the id "examplemod:example_tab" for the example item, that is placed after the combat tab

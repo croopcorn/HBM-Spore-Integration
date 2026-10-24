@@ -25,7 +25,11 @@ public class hbmsporeClient {
     public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
         event.register((state, level, pos, tintIndex) -> 0x707070,
                 hbmspore.DEAD_BIOMASS.get(),
-                hbmspore.DEAD_GASTRIC_BIOMASS.get()
+                hbmspore.DEAD_GASTRIC_BIOMASS.get(),
+                hbmspore.DEAD_CALCIFIED_BIOMASS.get(),
+                hbmspore.DEAD_SICKEN_BIOMASS.get()
+,
+                hbmspore.DEAD_FREEZE_BURNED_BIOMASS.get()
         );
 
     }

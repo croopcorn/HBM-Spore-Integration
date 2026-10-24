@@ -24,9 +24,10 @@ public class hazardReplace {
     private static final Map<BlockKey, Integer> EXPOSURE = new HashMap<>();
 
     private static final ResourceLocation BIOMASS = ResourceLocation.parse("spore:biomass_block");
-
     private static final ResourceLocation GASTRIC_BIOMASS = ResourceLocation.parse("spore:gastric_biomass_block");
-
+    private static final ResourceLocation CALCIFIED_BIOMASS = ResourceLocation.parse("spore:calcified_biomass_block");
+    private static final ResourceLocation SICKEN_BIOMASS = ResourceLocation.parse("spore:sicken_biomass_block");
+    private static final ResourceLocation FREEZE_BURNED_BIOMASS = ResourceLocation.parse("spore:freeze_burned_biomass");
     private static final double RAD_LIMIT = 1.0D;
     private static final int EXPOSURE_LIMIT = 10;
     private static final int CHECK_INTERVAL = 20;
@@ -80,14 +81,12 @@ public class hazardReplace {
                 int exposure = EXPOSURE.getOrDefault(key, 0) + 1;
 
                 if (exposure >= EXPOSURE_LIMIT) {
-                    if (id.equals(BIOMASS)) {
-                        level.setBlock(pos, hbmspore.DEAD_BIOMASS.get().defaultBlockState(), 3);
-                    } else if (id.equals(GASTRIC_BIOMASS)) {
-                        level.setBlock(pos, hbmspore.DEAD_GASTRIC_BIOMASS.get().defaultBlockState(), 3);
-                    }
-
-                    EXPOSURE.remove(key);
-                } else {
+                    if (id.equals(BIOMASS)) {level.setBlock(pos, hbmspore.DEAD_BIOMASS.get().defaultBlockState(), 3);}
+                    else if (id.equals(GASTRIC_BIOMASS)) {level.setBlock(pos, hbmspore.DEAD_GASTRIC_BIOMASS.get().defaultBlockState(), 3);}
+                    else if (id.equals(CALCIFIED_BIOMASS)) {level.setBlock(pos, hbmspore.DEAD_CALCIFIED_BIOMASS.get().defaultBlockState(), 3);}
+                    else if (id.equals(SICKEN_BIOMASS)) {level.setBlock(pos, hbmspore.DEAD_SICKEN_BIOMASS.get().defaultBlockState(), 3);}
+                    else if (id.equals(FREEZE_BURNED_BIOMASS)) {level.setBlock(pos, hbmspore.DEAD_FREEZE_BURNED_BIOMASS.get().defaultBlockState(), 3);}
+                    EXPOSURE.remove(key);} else {
                     EXPOSURE.put(key, exposure);
                 }
             }
@@ -95,7 +94,12 @@ public class hazardReplace {
     }
 
     private static boolean isSporeBlock(ResourceLocation id) {
-        return id.equals(BIOMASS) || id.equals(GASTRIC_BIOMASS);
+        return id.equals(BIOMASS)
+                || id.equals(GASTRIC_BIOMASS)
+                || id.equals(CALCIFIED_BIOMASS)
+                || id.equals(SICKEN_BIOMASS)
+                || id.equals(FREEZE_BURNED_BIOMASS)
+                ;
     }
 
     private record BlockKey(ResourceKey<Level> dimension, long pos) {

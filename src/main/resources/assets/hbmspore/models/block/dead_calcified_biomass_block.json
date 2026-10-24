@@ -1,0 +1,8 @@
+{
+  "parent": "hbmspore:block/gray_overground_block",
+  "textures": {
+    "0": "spore:block/calcified_biomass",
+    "1": "spore:block/calcified_biomass",
+    "particle": "spore:block/calcified_biomass"
+  }
+}

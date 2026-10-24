@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "hbmspore:block/dead_freeze_burned_biomass_block"
+    }
+  }
+}
