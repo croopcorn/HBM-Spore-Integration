@@ -1,34 +1,25 @@
 package com.hbmspore.hbmsporemod;
 
-import org.slf4j.Logger;
-
 import com.mojang.logging.LogUtils;
-
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.MapColor;
-import net.minecraft.resources.ResourceLocation;
-
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.DeferredItem;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(hbmspore.MODID)
@@ -53,10 +44,15 @@ public class hbmspore {
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
     public static final DeferredBlock<Block> DEAD_BIOMASS =
-            BLOCKS.registerSimpleBlock("dead_biomass_block",BlockBehaviour.Properties.of().destroyTime(0.5F));
-
+            BLOCKS.registerSimpleBlock("dead_biomass_block", BlockBehaviour.Properties.of().strength(2.0F, 2.0F).sound(SoundType.SLIME_BLOCK));
     public static final DeferredItem<BlockItem> DEAD_BIOMASS_ITEM =
             ITEMS.registerSimpleBlockItem("dead_biomass_block", DEAD_BIOMASS);
+
+
+    public static final DeferredBlock<Block> DEAD_GASTRIC_BIOMASS =
+            BLOCKS.registerSimpleBlock("dead_gastric_biomass_block", BlockBehaviour.Properties.of().strength(4.0F, 4.0F).sound(SoundType.SLIME_BLOCK));
+    public static final DeferredItem<BlockItem> DEAD_GASTRIC_BIOMASS_ITEM =
+            ITEMS.registerSimpleBlockItem("dead_gastric_biomass_block", DEAD_GASTRIC_BIOMASS);
 
 
     // Creates a creative tab with the id "examplemod:example_tab" for the example item, that is placed after the combat tab
@@ -67,7 +63,7 @@ public class hbmspore {
                             .withTabsBefore(CreativeModeTabs.COMBAT)
                             .icon(() -> DEAD_BIOMASS_ITEM.get().getDefaultInstance())
                             .displayItems((parameters, output) -> {
-                                output.accept(DEAD_BIOMASS_ITEM.get());
+                                ITEMS.getEntries().forEach(item -> output.accept(item.get()));
                             })
                             .build()
             );
@@ -76,7 +72,7 @@ public class hbmspore {
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
     public hbmspore(IEventBus modEventBus, ModContainer modContainer) {
         // Register the commonSetup method for modloading
-        modEventBus.addListener(this::commonSetup);
+        //modEventBus.addListener(this::commonSetup);
 
         // Register the Deferred Register to the mod event bus so blocks get registered
         BLOCKS.register(modEventBus);
@@ -93,35 +89,13 @@ public class hbmspore {
         NeoForge.EVENT_BUS.register(this);
 
         // Register the item to a creative tab
-        modEventBus.addListener(this::addCreative);
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
-        modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        //modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
-    private void commonSetup(FMLCommonSetupEvent event) {
-        // Some common setup code
-        LOGGER.info("HBM Spore Compact loaded");
-
-        if (Config.LOG_DIRT_BLOCK.getAsBoolean()) {
-            LOGGER.info("DIRT BLOCK >> {}",
-                    BuiltInRegistries.BLOCK.getKey(Blocks.DIRT));
-        }
-
-        LOGGER.info("{}{}", Config.MAGIC_NUMBER_INTRODUCTION.get(),
-                Config.MAGIC_NUMBER.getAsInt());
-
-        Config.ITEM_STRINGS.get().forEach(
-                (item) -> LOGGER.info("ITEM >> {}", item)
-        );
-    }
 
     // Add the example block item to the building blocks tab
-    private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
-            event.accept(DEAD_BIOMASS_ITEM);
-        }
-    }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent

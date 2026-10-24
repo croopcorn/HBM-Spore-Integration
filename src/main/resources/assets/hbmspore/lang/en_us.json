@@ -1,4 +1,5 @@
 {
   "block.hbmspore.dead_biomass_block": "Dead Biomass Block",
+  "block.hbmspore.dead_gastric_biomass_block": "Dead Gastric Biomass",
   "itemGroup.hbmspore":"HBM Spore Integration"
 }
