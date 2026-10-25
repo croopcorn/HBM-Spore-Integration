@@ -1,0 +1,15 @@
+{
+  "rate": {
+    "type": "fixed",
+    "emission": 0.005
+  },
+  "targets": [
+    "hbmspore:dead_biomass_block",
+    "hbmspore:dead_gastric_biomass_block",
+    "hbmspore:dead_calcified_biomass_block",
+    "hbmspore:dead_sicken_biomass_block",
+    "hbmspore:dead_freeze_burned_biomass_block",
+    "hbmspore:dead_rooted_biomass_block",
+    "hbmspore:dead_crusted_bile_block"
+  ]
+}

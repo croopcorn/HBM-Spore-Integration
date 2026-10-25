@@ -1,5 +1,8 @@
 package com.hbmspore.hbmsporemod;
 
+import com.hbm.hazard.HazardRegistry;
+import com.hbm.hazard.HazardSystem;
+import com.hbm.items.ModItems;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -13,6 +16,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -53,20 +57,39 @@ public class hbmspore {
     public static final DeferredItem<BlockItem> DEAD_GASTRIC_BIOMASS_ITEM =
             ITEMS.registerSimpleBlockItem("dead_gastric_biomass_block", DEAD_GASTRIC_BIOMASS);
 
-    public static final DeferredBlock<Block> DEAD_CALCIFIED_BIOMASS = 
+    public static final DeferredBlock<Block> DEAD_CALCIFIED_BIOMASS =
             BLOCKS.registerSimpleBlock("dead_calcified_biomass_block", BlockBehaviour.Properties.of().strength(8.0F, 20.0F).sound(SoundType.SLIME_BLOCK));
-    public static final DeferredItem<BlockItem> DEAD_CALCIFIED_BIOMASS_ITEM = 
+    public static final DeferredItem<BlockItem> DEAD_CALCIFIED_BIOMASS_ITEM =
             ITEMS.registerSimpleBlockItem("dead_calcified_biomass_block", DEAD_CALCIFIED_BIOMASS);
 
-    public static final DeferredBlock<Block> DEAD_SICKEN_BIOMASS = 
+    public static final DeferredBlock<Block> DEAD_SICKEN_BIOMASS =
             BLOCKS.registerSimpleBlock("dead_sicken_biomass_block", BlockBehaviour.Properties.of().strength(4.0F, 4.0F).sound(SoundType.SLIME_BLOCK));
-    public static final DeferredItem<BlockItem> DEAD_SICKEN_BIOMASS_ITEM = 
+    public static final DeferredItem<BlockItem> DEAD_SICKEN_BIOMASS_ITEM =
             ITEMS.registerSimpleBlockItem("dead_sicken_biomass_block", DEAD_SICKEN_BIOMASS);
 
-    public static final DeferredBlock<Block> DEAD_FREEZE_BURNED_BIOMASS = 
+    public static final DeferredBlock<Block> DEAD_FREEZE_BURNED_BIOMASS =
             BLOCKS.registerSimpleBlock("dead_freeze_burned_biomass_block", BlockBehaviour.Properties.of().strength(2.0F, 2.0F).sound(SoundType.SLIME_BLOCK).randomTicks());
-    public static final DeferredItem<BlockItem> DEAD_FREEZE_BURNED_BIOMASS_ITEM = 
+    public static final DeferredItem<BlockItem> DEAD_FREEZE_BURNED_BIOMASS_ITEM =
             ITEMS.registerSimpleBlockItem("dead_freeze_burned_biomass_block", DEAD_FREEZE_BURNED_BIOMASS);
+
+    public static final DeferredBlock<Block> DEAD_ROOTED_BIOMASS =
+            BLOCKS.registerSimpleBlock("dead_rooted_biomass_block", BlockBehaviour.Properties.of().strength(2.0F, 2.0F).sound(SoundType.SLIME_BLOCK));
+    public static final DeferredItem<BlockItem> DEAD_ROOTED_BIOMASS_ITEM =
+            ITEMS.registerSimpleBlockItem("dead_rooted_biomass_block", DEAD_ROOTED_BIOMASS);
+
+    public static final DeferredBlock<Block> DEAD_CRUSTED_BILE =
+            BLOCKS.registerSimpleBlock("dead_crusted_bile_block");
+    public static final DeferredItem<BlockItem> DEAD_CRUSTED_BILE_ITEM =
+            ITEMS.registerSimpleBlockItem("dead_crusted_bile_block", DEAD_CRUSTED_BILE);
+    private static void hazardReg() {
+        HazardSystem.register(DEAD_BIOMASS_ITEM.get(), HazardRegistry.makeData(HazardRegistry.RADIATION, 1.0D));
+        HazardSystem.register(DEAD_GASTRIC_BIOMASS_ITEM.get(), HazardRegistry.makeData(HazardRegistry.RADIATION, 1.0D));
+        HazardSystem.register(DEAD_CALCIFIED_BIOMASS_ITEM.get(), HazardRegistry.makeData(HazardRegistry.RADIATION, 1.0D));
+        HazardSystem.register(DEAD_SICKEN_BIOMASS_ITEM.get(), HazardRegistry.makeData(HazardRegistry.RADIATION, 1.0D));
+        HazardSystem.register(DEAD_FREEZE_BURNED_BIOMASS_ITEM.get(), HazardRegistry.makeData(HazardRegistry.RADIATION, 1.0D));
+        HazardSystem.register(DEAD_ROOTED_BIOMASS_ITEM.get(), HazardRegistry.makeData(HazardRegistry.RADIATION, 1.0D));
+        HazardSystem.register(DEAD_CRUSTED_BILE_ITEM.get(), HazardRegistry.makeData(HazardRegistry.RADIATION, 1.0D));
+    }
 
 
     // Creates a creative tab with the id "examplemod:example_tab" for the example item, that is placed after the combat tab
@@ -115,6 +138,7 @@ public class hbmspore {
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
         // Do something when the server starts
+        hazardReg();
         LOGGER.info("HBM Spore Compact server starting");
     }
 }

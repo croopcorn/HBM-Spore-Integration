@@ -27,9 +27,11 @@ public class hbmsporeClient {
                 hbmspore.DEAD_BIOMASS.get(),
                 hbmspore.DEAD_GASTRIC_BIOMASS.get(),
                 hbmspore.DEAD_CALCIFIED_BIOMASS.get(),
-                hbmspore.DEAD_SICKEN_BIOMASS.get()
+                hbmspore.DEAD_SICKEN_BIOMASS.get(),
+                hbmspore.DEAD_FREEZE_BURNED_BIOMASS.get(),
+                hbmspore.DEAD_ROOTED_BIOMASS.get()
 ,
-                hbmspore.DEAD_FREEZE_BURNED_BIOMASS.get()
+                hbmspore.DEAD_CRUSTED_BILE.get()
         );
 
     }
