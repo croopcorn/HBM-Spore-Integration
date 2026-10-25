@@ -1,0 +1,10 @@
+{
+  "block.hbmspore.dead_biomass_block": "Мёртвый блок биомассы",
+  "block.hbmspore.dead_gastric_biomass_block": "Мёртвый блок желудочной биомассы",
+  "block.hbmspore.dead_calcified_biomass_block": "Мёртвый блок кальцифицированной биомассы",
+  "block.hbmspore.dead_sicken_biomass_block": "Мёртвый блок разбухшей биомассы",
+  "block.hbmspore.dead_freeze_burned_biomass_block": "Мёртвая замороженная сгоревшая биомасса",
+  "block.hbmspore.dead_rooted_biomass_block": "Мёртвая корневистая биомасса",
+  "block.hbmspore.dead_crusted_bile_block": "Мёртвая затвердевшая желчь",
+  "itemGroup.hbmspore": "Интеграция HBM Spore"
+}

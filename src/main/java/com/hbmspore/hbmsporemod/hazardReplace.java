@@ -1,4 +1,3 @@
-
 package com.hbmspore.hbmsporemod;
 
 import com.hbm.handler.radiation.RadiationSystemNT;
@@ -28,20 +27,13 @@ public class hazardReplace {
     private static final Set<ChunkKey> LOADED_CHUNKS = new HashSet<>();
     private static final Queue<ChunkKey> CHUNK_QUEUE = new ArrayDeque<>();
 
-    private static final ResourceLocation BIOMASS =
-            ResourceLocation.parse("spore:biomass_block");
-    private static final ResourceLocation GASTRIC_BIOMASS =
-            ResourceLocation.parse("spore:gastric_biomass_block");
-    private static final ResourceLocation CALCIFIED_BIOMASS =
-            ResourceLocation.parse("spore:calcified_biomass_block");
-    private static final ResourceLocation SICKEN_BIOMASS =
-            ResourceLocation.parse("spore:sicken_biomass_block");
-    private static final ResourceLocation FREEZE_BURNED_BIOMASS =
-            ResourceLocation.parse("spore:freeze_burned_biomass");
-    private static final ResourceLocation ROOTED_BIOMASS =
-            ResourceLocation.parse("spore:rooted_biomass");
-    private static final ResourceLocation CRUSTED_BILE =
-            ResourceLocation.parse("spore:crusted_bile");
+    private static final ResourceLocation BIOMASS = ResourceLocation.parse("spore:biomass_block");
+    private static final ResourceLocation GASTRIC_BIOMASS = ResourceLocation.parse("spore:gastric_biomass_block");
+    private static final ResourceLocation CALCIFIED_BIOMASS = ResourceLocation.parse("spore:calcified_biomass_block");
+    private static final ResourceLocation SICKEN_BIOMASS = ResourceLocation.parse("spore:sicken_biomass_block");
+    private static final ResourceLocation FREEZE_BURNED_BIOMASS = ResourceLocation.parse("spore:freeze_burned_biomass");
+    private static final ResourceLocation ROOTED_BIOMASS = ResourceLocation.parse("spore:rooted_biomass");
+    private static final ResourceLocation CRUSTED_BILE = ResourceLocation.parse("spore:crusted_bile");
 
     private static final double RAD_LIMIT = 1.0D;
     private static final int CHECK_INTERVAL = 5;

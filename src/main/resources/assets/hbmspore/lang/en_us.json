@@ -1,5 +1,10 @@
 {
   "block.hbmspore.dead_biomass_block": "Dead Biomass Block",
   "block.hbmspore.dead_gastric_biomass_block": "Dead Gastric Biomass",
-  "itemGroup.hbmspore":"HBM Spore Integration"
+  "block.hbmspore.dead_calcified_biomass_block": "Dead Calcified Biomass",
+  "block.hbmspore.dead_sicken_biomass_block": "Dead Sickened Biomass",
+  "block.hbmspore.dead_freeze_burned_biomass_block": "Dead Freeze Burned Biomass",
+  "block.hbmspore.dead_rooted_biomass_block": "Dead Rooted Biomass",
+  "block.hbmspore.dead_crusted_bile_block": "Dead Crusted Bile",
+  "itemGroup.hbmspore": "HBM Spore Integration"
 }

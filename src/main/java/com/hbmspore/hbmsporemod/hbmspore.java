@@ -2,7 +2,6 @@ package com.hbmspore.hbmsporemod;
 
 import com.hbm.hazard.HazardRegistry;
 import com.hbm.hazard.HazardSystem;
-import com.hbm.items.ModItems;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -16,7 +15,6 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -81,6 +79,8 @@ public class hbmspore {
             BLOCKS.registerSimpleBlock("dead_crusted_bile_block");
     public static final DeferredItem<BlockItem> DEAD_CRUSTED_BILE_ITEM =
             ITEMS.registerSimpleBlockItem("dead_crusted_bile_block", DEAD_CRUSTED_BILE);
+
+
     private static void hazardReg() {
         HazardSystem.register(DEAD_BIOMASS_ITEM.get(), HazardRegistry.makeData(HazardRegistry.RADIATION, 1.0D));
         HazardSystem.register(DEAD_GASTRIC_BIOMASS_ITEM.get(), HazardRegistry.makeData(HazardRegistry.RADIATION, 1.0D));
