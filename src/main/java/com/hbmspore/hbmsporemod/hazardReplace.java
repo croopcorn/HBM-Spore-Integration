@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.chunk.LevelChunkSection;
@@ -16,16 +17,21 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.level.ChunkEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 
-import java.util.ArrayDeque;
-import java.util.HashSet;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 @EventBusSubscriber(modid = hbmspore.MODID)
 public class hazardReplace {
 
-    private static final Set<ChunkKey> LOADED_CHUNKS = new HashSet<>();
-    private static final Queue<ChunkKey> CHUNK_QUEUE = new ArrayDeque<>();
+    private static final Set<ChunkKey> LOADED_CHUNKS = ConcurrentHashMap.newKeySet();
+
+    private static final Queue<ChunkKey> CHUNK_QUEUE = new ConcurrentLinkedQueue<>();
+
+    private static final ResourceLocation AIR = ResourceLocation.parse("minecraft:air");
+    private static final ResourceLocation MYCELIUM = ResourceLocation.parse("minecraft:mycelium");
 
     private static final ResourceLocation BIOMASS = ResourceLocation.parse("spore:biomass_block");
     private static final ResourceLocation GASTRIC_BIOMASS = ResourceLocation.parse("spore:gastric_biomass_block");
@@ -35,10 +41,42 @@ public class hazardReplace {
     private static final ResourceLocation ROOTED_BIOMASS = ResourceLocation.parse("spore:rooted_biomass");
     private static final ResourceLocation CRUSTED_BILE = ResourceLocation.parse("spore:crusted_bile");
 
-    private static final double RAD_LIMIT = 1.0D;
-    private static final int CHECK_INTERVAL = 5;
+    private static final ResourceLocation FUNGAL_STEM_TOP = ResourceLocation.parse("spore:fungal_stem_top");
+    private static final ResourceLocation HANGING_FUNGAL_STEM = ResourceLocation.parse("spore:hanging_fungal_stem");
+    private static final ResourceLocation FUNGAL_STEM = ResourceLocation.parse("spore:fungal_stem");
+    private static final ResourceLocation WALL_GROWTHS_FLESHY = ResourceLocation.parse("spore:wall_growths_fleshy");
+    private static final ResourceLocation WALL_GROWTHS_BIG = ResourceLocation.parse("spore:wall_growths_big");
+    private static final ResourceLocation WALL_GROWTHS = ResourceLocation.parse("spore:wall_growths");
+    private static final ResourceLocation VOCALS = ResourceLocation.parse("spore:vocals");
+    private static final ResourceLocation MYCELIUM_VEINS = ResourceLocation.parse("spore:mycelium_veins");
 
-    private static int ticks;
+    private static final Map<ResourceLocation, ResourceLocation> BLOCK_REPLACEMENTS = Map.ofEntries(
+            Map.entry(BIOMASS, ResourceLocation.parse("hbmspore:dead_biomass_block")),
+            Map.entry(GASTRIC_BIOMASS, ResourceLocation.parse("hbmspore:dead_gastric_biomass_block")),
+            Map.entry(CALCIFIED_BIOMASS, ResourceLocation.parse("hbmspore:dead_calcified_biomass_block")),
+            Map.entry(SICKEN_BIOMASS, ResourceLocation.parse("hbmspore:dead_sicken_biomass_block")),
+            Map.entry(FREEZE_BURNED_BIOMASS, ResourceLocation.parse("hbmspore:dead_freeze_burned_biomass_block")),
+            Map.entry(ROOTED_BIOMASS, ResourceLocation.parse("hbmspore:dead_rooted_biomass_block")),
+            Map.entry(CRUSTED_BILE, ResourceLocation.parse("hbmspore:dead_crusted_bile_block")),
+            Map.entry(MYCELIUM, ResourceLocation.parse("hbm:waste_mycelium")),
+            Map.entry(FUNGAL_STEM_TOP, AIR),
+            Map.entry(HANGING_FUNGAL_STEM, AIR),
+            Map.entry(FUNGAL_STEM, AIR),
+            Map.entry(WALL_GROWTHS_FLESHY,AIR),
+            Map.entry(WALL_GROWTHS_BIG,AIR),
+            Map.entry(WALL_GROWTHS,AIR),
+            Map.entry(VOCALS,AIR),
+            Map.entry(MYCELIUM_VEINS,AIR)
+    );
+
+    private static final double RAD_LIMIT = 10.0D;
+    private static final int CHECK_INTERVAL = 1;
+
+    private static int ticks = 0;
+
+    private static final Set<ChunkKey> QUEUED_CHUNKS =
+            ConcurrentHashMap.newKeySet();
+
 
     @SubscribeEvent
     public static void onChunkLoad(ChunkEvent.Load event) {
@@ -47,11 +85,12 @@ public class hazardReplace {
         }
 
         ChunkPos pos = event.getChunk().getPos();
-        ChunkKey key = new ChunkKey(level.dimension(), pos.x, pos.z);
+        ChunkKey key = new ChunkKey(
+                level.dimension(), pos.x, pos.z
+        );
 
-        if (LOADED_CHUNKS.add(key)) {
-            CHUNK_QUEUE.add(key);
-        }
+        LOADED_CHUNKS.add(key);
+        enqueueChunk(key);
     }
 
     @SubscribeEvent
@@ -61,10 +100,20 @@ public class hazardReplace {
         }
 
         ChunkPos pos = event.getChunk().getPos();
-        ChunkKey key = new ChunkKey(level.dimension(), pos.x, pos.z);
+        ChunkKey key = new ChunkKey(
+                level.dimension(), pos.x, pos.z
+        );
 
         LOADED_CHUNKS.remove(key);
         CHUNK_QUEUE.removeIf(key::equals);
+        QUEUED_CHUNKS.remove(key);
+    }
+
+    private static void enqueueChunk(ChunkKey key) {
+        if (LOADED_CHUNKS.contains(key)
+                && QUEUED_CHUNKS.add(key)) {
+            CHUNK_QUEUE.add(key);
+        }
     }
 
     @SubscribeEvent
@@ -81,6 +130,8 @@ public class hazardReplace {
             return;
         }
 
+        QUEUED_CHUNKS.remove(key);
+
         if (!LOADED_CHUNKS.contains(key)) {
             return;
         }
@@ -95,39 +146,39 @@ public class hazardReplace {
         }
 
         if (level == null) {
-            LOADED_CHUNKS.remove(key);
             return;
         }
 
-        LevelChunk chunk = level.getChunkSource().getChunkNow(key.x(), key.z());
+        try {
+            LevelChunk chunk = level.getChunkSource()
+                    .getChunkNow(key.x(), key.z());
 
-        if (chunk == null) {
-            LOADED_CHUNKS.remove(key);
-            return;
-        }
-
-        scanChunk(level, chunk);
-
-        if (LOADED_CHUNKS.contains(key)) {
-            CHUNK_QUEUE.add(key);
+            if (chunk != null) {
+                scanChunk(level, chunk);
+            }
+        } finally {
+            enqueueChunk(key);
         }
     }
 
     private static void scanChunk(ServerLevel level, LevelChunk chunk) {
         LevelChunkSection[] sections = chunk.getSections();
-        ChunkPos chunkPos = chunk.getPos();
 
-        int baseX = chunkPos.getMinBlockX();
-        int baseZ = chunkPos.getMinBlockZ();
+        boolean radiationChecked = false;
+        double chunkRadiation = 0.0D;
+
+        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
 
         for (int sectionIndex = 0; sectionIndex < sections.length; sectionIndex++) {
             LevelChunkSection section = sections[sectionIndex];
 
-            if (section.hasOnlyAir()) {
+            if (section == null || section.hasOnlyAir()) {
                 continue;
             }
 
-            int baseY = chunk.getSectionYFromSectionIndex(sectionIndex) * 16;
+            int baseY = level.getMinBuildHeight() + (sectionIndex << 4);
+            int baseX = chunk.getPos().getMinBlockX();
+            int baseZ = chunk.getPos().getMinBlockZ();
 
             for (int y = 0; y < 16; y++) {
                 int worldY = baseY + y;
@@ -143,21 +194,20 @@ public class hazardReplace {
                         ResourceLocation id =
                                 BuiltInRegistries.BLOCK.getKey(state.getBlock());
 
-                        if (!isSporeBlock(id)) {
+                        if (!BLOCK_REPLACEMENTS.containsKey(id)) {
                             continue;
                         }
 
-                        BlockPos pos = new BlockPos(
-                                baseX + x,
-                                worldY,
-                                baseZ + z
-                        );
+                        pos.set(baseX + x, worldY, baseZ + z);
 
-                        double radiation =
-                                RadiationSystemNT.getRadForCoord(level, pos);
+                        if (!radiationChecked) {
+                            chunkRadiation =
+                                    RadiationSystemNT.getRadForCoord(level, pos);
+                            radiationChecked = true;
 
-                        if (radiation < RAD_LIMIT) {
-                            continue;
+                            if (chunkRadiation < RAD_LIMIT) {
+                                return;
+                            }
                         }
 
                         replaceBlock(level, pos, id);
@@ -167,36 +217,15 @@ public class hazardReplace {
         }
     }
 
-    private static void replaceBlock(
-            ServerLevel level,
-            BlockPos pos,
-            ResourceLocation id
-    ) {
-        if (id.equals(BIOMASS)) {
-            level.setBlock(pos, hbmspore.DEAD_BIOMASS.get().defaultBlockState(), 3);
-        } else if (id.equals(GASTRIC_BIOMASS)) {
-            level.setBlock(pos, hbmspore.DEAD_GASTRIC_BIOMASS.get().defaultBlockState(), 3);
-        } else if (id.equals(CALCIFIED_BIOMASS)) {
-            level.setBlock(pos, hbmspore.DEAD_CALCIFIED_BIOMASS.get().defaultBlockState(), 3);
-        } else if (id.equals(SICKEN_BIOMASS)) {
-            level.setBlock(pos, hbmspore.DEAD_SICKEN_BIOMASS.get().defaultBlockState(), 3);
-        } else if (id.equals(FREEZE_BURNED_BIOMASS)) {
-            level.setBlock(pos, hbmspore.DEAD_FREEZE_BURNED_BIOMASS.get().defaultBlockState(), 3);
-        } else if (id.equals(ROOTED_BIOMASS)) {
-            level.setBlock(pos, hbmspore.DEAD_ROOTED_BIOMASS.get().defaultBlockState(), 3);
-        } else if (id.equals(CRUSTED_BILE)) {
-            level.setBlock(pos, hbmspore.DEAD_CRUSTED_BILE.get().defaultBlockState(), 3);
-        }
-    }
+    private static void replaceBlock(ServerLevel level, BlockPos pos, ResourceLocation id) {
+        ResourceLocation replacementId = BLOCK_REPLACEMENTS.get(id);
 
-    private static boolean isSporeBlock(ResourceLocation id) {
-        return id.equals(BIOMASS)
-                || id.equals(GASTRIC_BIOMASS)
-                || id.equals(CALCIFIED_BIOMASS)
-                || id.equals(SICKEN_BIOMASS)
-                || id.equals(FREEZE_BURNED_BIOMASS)
-                || id.equals(ROOTED_BIOMASS)
-                || id.equals(CRUSTED_BILE);
+        if (replacementId == null) {
+            return;
+        }
+
+        Block replacement = BuiltInRegistries.BLOCK.get(replacementId);
+        level.setBlock(pos, replacement.defaultBlockState(), 3);
     }
 
     private record ChunkKey(ResourceKey<Level> dimension, int x, int z) {

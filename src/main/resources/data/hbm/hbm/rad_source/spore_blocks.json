@@ -1,7 +1,7 @@
 {
   "rate": {
     "type": "fixed",
-    "emission": 0.005
+    "emission": 0.001
   },
   "targets": [
     "hbmspore:dead_biomass_block",
