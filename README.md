@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/badge/License-All_rights_reserved-2F80ED?style=flat-square)](LICENSE)
 ![Status](https://img.shields.io/badge/Status-BETA-F5A623?style=flat-square)
 
-[![CurseForge](https://img.shields.io/badge/CurseForge-under_review-F16436?style=for-the-badge&logo=curseforge&logoColor=white)](https://www.curseforge.com/minecraft/mc-mods)
+[![CurseForge](https://img.shields.io/badge/CurseForge-under_review-F16436?style=for-the-badge&logo=curseforge&logoColor=white)](https://www.curseforge.com/minecraft/mc-mods/hbm-spore-integration)
 [![Modrinth](https://img.shields.io/badge/Modrinth-under_review-1BD96A?style=for-the-badge&logo=modrinth&logoColor=white)](https://modrinth.com/mod/hbm-spore-integration)
 
 
