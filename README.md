@@ -7,6 +7,13 @@
 [![Modrinth](https://img.shields.io/badge/Modrinth-under_review-1BD96A?style=for-the-badge&logo=modrinth&logoColor=white)](https://modrinth.com/mod/hbm-spore-integration)
 
 
+
+# HBM Spore Integration
+
+This mod combines elements of the [NTM: Decentralized Edition](https://github.com/SecretAgent12/NTM-Decentralized-Edition) mod and the [Fungal Infection: Spore](https://modrinth.com/mod/fungal-infectionspore) mod. It introduces new blocks and a radiation-based death mechanic.
+
+
+
 ## License
 
 All rights reserved.
