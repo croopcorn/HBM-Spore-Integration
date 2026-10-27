@@ -49,6 +49,13 @@ public class hazardReplace {
     private static final ResourceLocation WALL_GROWTHS = ResourceLocation.parse("spore:wall_growths");
     private static final ResourceLocation VOCALS = ResourceLocation.parse("spore:vocals");
     private static final ResourceLocation MYCELIUM_VEINS = ResourceLocation.parse("spore:mycelium_veins");
+    private static final ResourceLocation FUNGAL_CLAMP = ResourceLocation.parse("spore:fungal_clamp");
+    private static final ResourceLocation BLOMFUNG = ResourceLocation.parse("spore:blomfung");
+    private static final ResourceLocation BLOOMFUNG2 = ResourceLocation.parse("spore:bloomfung2");
+    private static final ResourceLocation FANG_LUMP = ResourceLocation.parse("spore:fang_lump");
+    private static final ResourceLocation EXPLODING_LUMP = ResourceLocation.parse("spore:exploding_lump");
+    private static final ResourceLocation BIOMASS_BULB = ResourceLocation.parse("spore:biomass_bulb");
+    private static final ResourceLocation REMAINS = ResourceLocation.parse("spore:remains");
 
     private static final Map<ResourceLocation, ResourceLocation> BLOCK_REPLACEMENTS = Map.ofEntries(
             Map.entry(BIOMASS, ResourceLocation.parse("hbmspore:dead_biomass_block")),
@@ -66,7 +73,14 @@ public class hazardReplace {
             Map.entry(WALL_GROWTHS_BIG,AIR),
             Map.entry(WALL_GROWTHS,AIR),
             Map.entry(VOCALS,AIR),
-            Map.entry(MYCELIUM_VEINS,AIR)
+            Map.entry(MYCELIUM_VEINS,AIR),
+            Map.entry(FUNGAL_CLAMP,AIR),
+            Map.entry(BLOMFUNG,AIR),
+            Map.entry(BLOOMFUNG2,AIR),
+            Map.entry(FANG_LUMP,AIR),
+            Map.entry(EXPLODING_LUMP,AIR),
+            Map.entry(BIOMASS_BULB,AIR),
+            Map.entry(REMAINS,AIR)
     );
 
     private static final double RAD_LIMIT = 10.0D;
